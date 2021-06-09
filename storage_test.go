@@ -13,8 +13,8 @@ import (
 	"testing"
 )
 
-func setupTest(t *testing.T) (filename string, fn func()) {
-	f, err := ioutil.TempFile(os.TempDir(), "")
+func setupTest(t *testing.T) (filename string) {
+	f, err := ioutil.TempFile(t.TempDir(), "")
 	if err != nil {
 		t.Fatal("create temp", err)
 	}
@@ -51,17 +51,11 @@ func setupTest(t *testing.T) (filename string, fn func()) {
 		}
 	}
 
-	return filename, func() {
-		err := os.Remove(filename)
-		if err != nil {
-			t.Fatalf("remove file %s: %v", filename, err)
-		}
-	}
+	return filename
 }
 
 func TestStorage_List(t *testing.T) {
-	filename, cleanup := setupTest(t)
-	defer cleanup()
+	filename := setupTest(t)
 
 	s, err := NewStorager(
 		pairs.WithEndpoint(endpoint.NewFile(filename).String()),
@@ -97,8 +91,7 @@ func TestStorage_List(t *testing.T) {
 }
 
 func TestStorage_Read(t *testing.T) {
-	filename, cleanup := setupTest(t)
-	defer cleanup()
+	filename := setupTest(t)
 
 	s, err := NewStorager(
 		pairs.WithEndpoint(endpoint.NewFile(filename).String()),
@@ -117,8 +110,7 @@ func TestStorage_Read(t *testing.T) {
 }
 
 func TestStorage_Stat(t *testing.T) {
-	filename, cleanup := setupTest(t)
-	defer cleanup()
+	filename := setupTest(t)
 
 	s, err := NewStorager(
 		pairs.WithEndpoint(endpoint.NewFile(filename).String()),
