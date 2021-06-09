@@ -1,5 +1,5 @@
 /*
-Package example provided support for local file system.
+Package tar provided support for tar archive files.
 */
 package tar
 
