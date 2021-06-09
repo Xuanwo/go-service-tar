@@ -61,7 +61,7 @@ func setupTest(t *testing.T) (filename string, fn func()) {
 
 func TestStorage_List(t *testing.T) {
 	filename, cleanup := setupTest(t)
-	t.Cleanup(cleanup)
+	defer cleanup()
 
 	s, err := NewStorager(
 		pairs.WithEndpoint(endpoint.NewFile(filename).String()),
@@ -98,7 +98,7 @@ func TestStorage_List(t *testing.T) {
 
 func TestStorage_Read(t *testing.T) {
 	filename, cleanup := setupTest(t)
-	t.Cleanup(cleanup)
+	defer cleanup()
 
 	s, err := NewStorager(
 		pairs.WithEndpoint(endpoint.NewFile(filename).String()),
@@ -118,7 +118,7 @@ func TestStorage_Read(t *testing.T) {
 
 func TestStorage_Stat(t *testing.T) {
 	filename, cleanup := setupTest(t)
-	t.Cleanup(cleanup)
+	defer cleanup()
 
 	s, err := NewStorager(
 		pairs.WithEndpoint(endpoint.NewFile(filename).String()),
