@@ -14,7 +14,7 @@ import (
 )
 
 func setupTest(t *testing.T) (filename string, fn func()) {
-	f, err := ioutil.TempFile(t.TempDir(), "")
+	f, err := ioutil.TempFile(os.TempDir(), "")
 	if err != nil {
 		t.Fatal("create temp", err)
 	}
