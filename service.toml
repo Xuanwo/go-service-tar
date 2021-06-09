@@ -2,6 +2,10 @@ name = "tar"
 
 [namespace.storage]
 
+[namespace.storage.new]
+required = ["endpoint"]
+optional = ["work_dir"]
+
 [namespace.storage.op.create]
 optional = ["object_mode"]
 

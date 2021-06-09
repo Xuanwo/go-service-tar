@@ -71,7 +71,11 @@ type pairStorageNew struct {
 	pairs []Pair
 
 	// Required pairs
+	HasEndpoint bool
+	Endpoint    string
 	// Optional pairs
+	HasWorkDir bool
+	WorkDir    string
 }
 
 // parsePairStorageNew will parse Pair slice into *pairStorageNew
@@ -83,8 +87,23 @@ func parsePairStorageNew(opts []Pair) (pairStorageNew, error) {
 	for _, v := range opts {
 		switch v.Key {
 		// Required pairs
+		case "endpoint":
+			if result.HasEndpoint {
+				continue
+			}
+			result.HasEndpoint = true
+			result.Endpoint = v.Value.(string)
 		// Optional pairs
+		case "work_dir":
+			if result.HasWorkDir {
+				continue
+			}
+			result.HasWorkDir = true
+			result.WorkDir = v.Value.(string)
 		}
+	}
+	if !result.HasEndpoint {
+		return pairStorageNew{}, services.PairRequiredError{Keys: []string{"endpoint"}}
 	}
 
 	return result, nil
