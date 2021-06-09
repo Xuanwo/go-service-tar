@@ -8,12 +8,13 @@ import (
 	"github.com/beyondstorage/go-storage/v4/pairs"
 	"github.com/beyondstorage/go-storage/v4/types"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"os"
 	"testing"
 )
 
 func setupTest(t *testing.T) (filename string, fn func()) {
-	f, err := os.CreateTemp(t.TempDir(), "")
+	f, err := ioutil.TempFile(t.TempDir(), "")
 	if err != nil {
 		t.Fatal("create temp", err)
 	}
